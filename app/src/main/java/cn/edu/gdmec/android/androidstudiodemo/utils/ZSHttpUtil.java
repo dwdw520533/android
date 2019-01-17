@@ -151,8 +151,9 @@ public class ZSHttpUtil {
 				});
 	}
 
-	public static void getHttp(String url, Map<String, String> params, final ZSHttpCallBack zsHttpCallBack) {
+	public static void getHttp(VoteApi api, String url, Map<String, String> params, final ZSHttpCallBack zsHttpCallBack) {
 
+		String session_id = api.readSessionId();
 		Set<String> keySet = params.keySet();
 		String[] strings = new String[keySet.size()];
 		strings = keySet.toArray(strings);
@@ -170,6 +171,7 @@ public class ZSHttpUtil {
 		url += stringBuilder.toString();
 		GetBuilder getBuilder = OkHttpUtils.get();
 		getBuilder.url(url);
+		getBuilder.addHeader("Cookie", "sessionid=" + session_id);
 		getBuilder.build()
 				.execute(new Callback<String>() {
 

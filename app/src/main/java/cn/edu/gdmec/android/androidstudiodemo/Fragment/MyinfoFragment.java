@@ -12,20 +12,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+
 import cn.edu.gdmec.android.androidstudiodemo.LoginActivity;
 import cn.edu.gdmec.android.androidstudiodemo.R;
+import cn.edu.gdmec.android.androidstudiodemo.ServerUrlActivity;
 import cn.edu.gdmec.android.androidstudiodemo.SettingActivity;
 import cn.edu.gdmec.android.androidstudiodemo.UserInfoActivity;
 import cn.edu.gdmec.android.androidstudiodemo.utils.AnalysisUtils;
+import cn.edu.gdmec.android.androidstudiodemo.utils.VoteApi;
+import cn.edu.gdmec.android.androidstudiodemo.utils.ZSHttpUtil;
 
 
 public class MyinfoFragment extends Fragment {
 
     private ImageView iv_head_icon;//
-    private TextView tv_user_name;
+    private TextView tv_user_name, tv_user_logout;
     private LinearLayout ll_head;
     private RelativeLayout rl_course_history;
     private RelativeLayout rl_setting;
+    private RelativeLayout rl_server_url;
     //private Context mContext;
 
     @Override
@@ -43,6 +49,8 @@ public class MyinfoFragment extends Fragment {
         tv_user_name = (TextView) view.findViewById(R.id.tv_user_name);
         rl_course_history = (RelativeLayout) view.findViewById(R.id.rl_course_history);
         rl_setting = (RelativeLayout) view.findViewById(R.id.rl_setting);
+        tv_user_logout = (TextView) view.findViewById(R.id.tv_user_logout);
+        rl_server_url = (RelativeLayout) view.findViewById(R.id.rl_server_url);
         setLoginParams(AnalysisUtils.readLoginStatus(getActivity()));
         ll_head.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +90,39 @@ public class MyinfoFragment extends Fragment {
                 }
             }
         });
+        tv_user_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AnalysisUtils.readLoginStatus(getActivity())) {
+                    VoteApi vote_api = new VoteApi(getActivity());
+                    vote_api.user_logout(new ZSHttpUtil.ZSHttpCallBack() {
+                        @Override
+                        public void onDataSuccess(JSONObject jsonObject) {
+                            Toast.makeText(getActivity(), "退出登录成功", Toast.LENGTH_SHORT).show();
+                            AnalysisUtils.clearLoginStatus(getActivity());
+                            Intent data = new Intent();
+                            data.putExtra("isLogin", false);
+                            getActivity().setResult(getActivity().RESULT_OK, data);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body, new MyinfoFragment()).commit();
+                        }
+
+                        @Override
+                        public void onDataFailed(JSONObject jsonObject) {
+                            Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), "您还未登录，请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        rl_server_url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ServerUrlActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -90,8 +131,10 @@ public class MyinfoFragment extends Fragment {
      **/
     private void setLoginParams(boolean isLogin) {
         if (isLogin) {
+            tv_user_logout.setVisibility(View.VISIBLE);
             tv_user_name.setText(AnalysisUtils.readLoginUserName(getActivity()));
         } else {
+            tv_user_logout.setVisibility(View.GONE);
             tv_user_name.setText("点击登录");
         }
     }

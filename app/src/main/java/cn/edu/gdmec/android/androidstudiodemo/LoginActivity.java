@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import cn.edu.gdmec.android.androidstudiodemo.utils.VoteApi;
 import cn.edu.gdmec.android.androidstudiodemo.utils.ZSHttpUtil;
@@ -85,13 +87,15 @@ public class LoginActivity extends AppCompatActivity{
                     // md5Psw.equals(); 判断，输入的密码加密后，是否与保存在SharedPreferences中一致
                 }else {
                     //一致登录成功
-                    VoteApi vote_api = new VoteApi();
+                    final VoteApi vote_api = new VoteApi(LoginActivity.this);
                     vote_api.user_login(userName, psw, new ZSHttpUtil.ZSHttpCallBack() {
                         @Override
                         public void onDataSuccess(JSONObject jsonObject) {
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                             //保存登录状态，在界面保存登录的用户名 定义个方法 saveLoginStatus boolean 状态 , userName 用户名;
                             saveLoginStatus(true, userName);
+                            JSONObject result = JSON.parseObject(jsonObject.getString("result"));
+                            vote_api.modifySessionId(result.getString("session_id"));
                             //登录成功后关闭此页面进入主页
                             Intent data = new Intent();
                             //datad.putExtra( ); name , value ;

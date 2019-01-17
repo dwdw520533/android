@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dip"
+    android:layout_marginTop="10dip">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/vote_icon"
+        android:background="@drawable/default_icon"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/vote_icon"
+        android:layout_marginLeft="10dip"
+        android:textSize="20sp"
+        android:text="投票主题"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/vote_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/vote_title"
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:textSize="20sp"
+        android:text="10"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/vote_count"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/vote_count"
+        android:textSize="20sp"
+        android:text="100%"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/vote_rate"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/vote_icon"
+        android:layout_below="@+id/vote_title"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="20dip"
+        android:textSize="20sp"
+        android:text="投票内容"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/vote_content"/>
+
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_user_vote"
+        android:layout_gravity="center"
+        android:layout_toRightOf="@+id/vote_content"
+        android:layout_marginTop="5dip"
+        android:layout_marginLeft="20dip"
+        android:layout_below="@+id/vote_rate"
+        android:layout_alignRight="@id/vote_rate"
+        android:textSize="18sp"
+        android:text="投 票"/>
+
+</RelativeLayout>

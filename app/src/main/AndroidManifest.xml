@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.edu.gdmec.android.androidstudiodemo">
+    <uses-permission android:name="android.permission.INTERNET" />
     <!--原为android:theme="@style/AppTheme"-->
     <!--去除ActionBar标题栏-->
     <!--添加应用图标，app_icon-->
@@ -26,5 +27,6 @@
         <activity android:name=".ModifyPwdActivity"></activity>
         <activity android:name=".ChangeUserInfoActivity"></activity>
         <activity android:name=".UserInfoActivity"></activity>
+        <activity android:name=".ServerUrlActivity"></activity>
     </application>
 </manifest>

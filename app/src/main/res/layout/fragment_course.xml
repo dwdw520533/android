@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@android:color/white">
 <TextView
-    android:text="Fragment_1"
+    android:text="李凌波的APP首页"
     android:textColor="@android:color/black"
     android:textSize="50sp"
     android:layout_width="wrap_content"

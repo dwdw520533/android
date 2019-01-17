@@ -82,8 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                      *从SharedPreferences中读取输入的用户名，判断SharedPreferences中是否有此用户名
                      */
                 }else{
-                    VoteApi vote_api = new VoteApi();
-                    vote_api.user_login(userName, psw, new ZSHttpUtil.ZSHttpCallBack() {
+                    VoteApi vote_api = new VoteApi(RegisterActivity.this);
+                    vote_api.user_register(userName, psw, new ZSHttpUtil.ZSHttpCallBack() {
                         @Override
                         public void onDataSuccess(JSONObject jsonObject) {
                             Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
